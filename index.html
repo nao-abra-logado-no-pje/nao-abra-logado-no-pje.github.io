@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <title>teste</title>
+    </head>
+    <body>
+        <input type="text" id="urlbase" value="https://evolucao.pje.csjt.jus.br">
+        <button onclick="pje()">PJE</button>
+        <div id="result"></div>
+    </body>
+    <script>
+        var divResult = document.getElementById('result');
+        var inputUrlbase = document.getElementById('urlbase');
+        var initParams = {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include'
+        };
+
+        function pje() {
+            var urlbase = inputUrlbase.value;
+            var path = 'pje-comum-api/api/agrupamentotarefas';
+            var url = `${urlbase}/${path}`;
+            console.log(url);
+
+            fetch(url, initParams)
+                .then(response => {
+                    response.text().then(text => {
+                        console.log(text);
+                        showResult(text);
+                    });
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                });
+        }
+
+        function showResult(result) {
+            divResult.textContent = result;
+        }
+    </script>
+</html>
